@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+  design/palette.html — цветовая палитра проекта NETFLIX.
+
+  Файл открывается в браузере без сервера. Содержит:
+    - значения цветов в HEX и их назначение;
+    - семантические цвета (успех, ошибка, предупреждение);
+    - типографику, отступы, радиусы;
+    - примеры компонентов в этой палитре.
+
+  Источник значений — CSS-переменные в assets/css/style.css (:root).
+-->
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NETFLIX — цветовая палитра</title>
+    <style>
+        /* Оформление самой страницы палитры */
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:#0b0b10;color:#f3f3f6;font-family:'Inter',system-ui,sans-serif;line-height:1.55;padding:40px 20px 80px}
+        .wrap{max-width:1100px;margin:0 auto}
+        h1{font-family:'Montserrat',sans-serif;font-size:34px;margin-bottom:6px}
+        h2{font-family:'Montserrat',sans-serif;font-size:22px;margin:38px 0 16px;display:flex;align-items:center;gap:12px}
+        h2::before{content:'';width:4px;height:22px;background:#e50914;border-radius:2px}
+        p.lead{color:#9a9aa8;margin-bottom:8px}
+        .meta{color:#9a9aa8;font-size:13px;margin-bottom:26px}
+        .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+        .sw{border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;background:#17171f}
+        .sw .chip{height:96px}
+        .sw .info{padding:12px 14px;display:grid;gap:4px}
+        .sw code{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:#fff}
+        .sw span{font-size:12px;color:#9a9aa8}
+        table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+        th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+        th{color:#9a9aa8;font-size:12px;text-transform:uppercase}
+        .type-row{display:flex;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+        .type-row b{min-width:220px}
+        .type-row span{color:#9a9aa8;font-size:13px}
+        .scale{display:flex;gap:10px;flex-wrap:wrap}
+        .scale div{background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;font-size:12px;color:#9a9aa8}
+        .demo{display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px}
+        .btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:14px;cursor:default}
+        .btn-primary{background:#e50914;color:#fff}
+        .btn-ghost{background:transparent;color:#f3f3f6;border:1px solid rgba(255,255,255,.08)}
+        .tag-ok{color:#2ea043}.tag-err{color:#ff4d59}.tag-warn{color:#ffd166}
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <h1>NETFLIX — цветовая палитра</h1>
+    <p class="lead">Тёмная тема с красным акцентом: контент (постеры) остаётся главным, интерфейс не отвлекает.</p>
+    <p class="meta">Проект: ПМ.01, часть 2 · онлайн-кинотеатр · значения совпадают с переменными <code>assets/css/style.css</code></p>
+
+    <!-- ================= Основные цвета ================= -->
+    <h2>Основные цвета</h2>
+    <div class="swatches">
+        <div class="sw">
+            <div class="chip" style="background:#0b0b10"></div>
+            <div class="info"><code>#0B0B10</code><span>Основной фон страниц. Почти чёрный, чтобы постеры выделялись.</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#101018"></div>
+            <div class="info"><code>#101018</code><span>Фон шапки при прокрутке и подвала; второй уровень глубины.</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#17171F"></div>
+            <div class="info"><code>#17171F</code><span>Поверхности: карточки, панели, формы, плашки тарифов.</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#1F1F2B"></div>
+            <div class="info"><code>#1F1F2B</code><span>Hover-состояния, чипы, вторичные кнопки, выбранные пункты меню.</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#E50914"></div>
+            <div class="info"><code>#E50914</code><span>Акцент бренда: кнопки действия, активные ссылки, метки, рейтинг-акцент.</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#B30F1D"></div>
+            <div class="info"><code>#B30F1D</code><span>Второй цвет градиента (кнопки, баннеры, заливки).</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#F3F3F6"></div>
+            <div class="info"><code>#F3F3F6</code><span>Основной текст и заголовки (не чисто белый — меньше утомляет).</span></div>
+        </div>
+        <div class="sw">
+            <div class="chip" style="background:#9A9AA8"></div>
+            <div class="info"><code>#9A9AA8</code><span>Второстепенный текст: подписи, метаданные, подсказки.</span></div>
+        </div>
+    </div>
+
+    <!-- ================= Семантические цвета ================= -->
+    <h2>Семантические цвета</h2>
+    <table>
+        <thead><tr><th>Цвет</th><th>HEX</th><th>Где используется</th></tr></thead>
+        <tbody>
+            <tr><td><span class="tag-ok">●</span> Успех</td><td><code>#2EA043</code></td><td>Уведомления об успехе, статус «Оплачено», роль «Подписчик», галочки в тарифах</td></tr>
+            <tr><td><span class="tag-err">●</span> Ошибка</td><td><code>#FF4D59</code></td><td>Ошибки валидации, отмена платежа, удаление, сообщения «неверный пароль»</td></tr>
+            <tr><td><span class="tag-warn">●</span> Предупреждение</td><td><code>#FFD166</code></td><td>Высокий рейтинг (топ), статус «Ожидает оплаты»</td></tr>
+            <tr><td>● Хороший рейтинг</td><td><code>#7FDE9A</code></td><td>Рейтинг 7.5–8.4 в карточках</td></tr>
+            <tr><td>● Тёмная метка</td><td><code>#3A3A4A</code></td><td>Бейдж «Топ» на постере (не конкурирует с «Новинкой»)</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ================= Прозрачности ================= -->
+    <h2>Прозрачности и границы</h2>
+    <table>
+        <thead><tr><th>Токен</th><th>Значение</th><th>Назначение</th></tr></thead>
+        <tbody>
+            <tr><td><code>--border</code></td><td><code>rgba(255,255,255,0.08)</code></td><td>Тонкие разделители карточек и таблиц на тёмном фоне</td></tr>
+            <tr><td>Фон шапки</td><td><code>rgba(11,11,16,0.90)</code></td><td>Полупрозрачная шапка с blur — контент виден при прокрутке</td></tr>
+            <tr><td>Оверлей постера</td><td><code>rgba(11,11,16,0.60)</code></td><td>Затемнение при наведении, поверх него кнопка «Смотреть»</td></tr>
+            <tr><td>Успех (фон)</td><td><code>rgba(46,160,67,0.12)</code></td><td>Плашки уведомлений и статусов</td></tr>
+            <tr><td>Ошибка (фон)</td><td><code>rgba(229,9,20,0.12)</code></td><td>Плашки ошибок и опасных действий</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ================= Типографика ================= -->
+    <h2>Типографика</h2>
+    <div class="type-row"><b style="font-family:Montserrat,sans-serif;font-size:30px;font-weight:900">Montserrat 900</b><span>Заголовки H1–H2, название бренда, цены тарифов</span></div>
+    <div class="type-row"><b style="font-family:Montserrat,sans-serif;font-size:22px;font-weight:800">Montserrat 800</b><span>Заголовки секций, названия тарифов</span></div>
+    <div class="type-row"><b style="font-family:Inter,sans-serif;font-size:16px;font-weight:600">Inter 600</b><span>Кнопки, названия карточек, пункты меню</span></div>
+    <div class="type-row"><b style="font-family:Inter,sans-serif;font-size:16px;font-weight:400">Inter 400</b><span>Основной текст, описания, таблицы</span></div>
+    <div class="type-row"><b style="font-family:Inter,sans-serif;font-size:13px;font-weight:400;color:#9a9aa8">Inter 400 · 13 px</b><span>Метаданные, подписи полей, подсказки</span></div>
+
+    <!-- ================= Сетка и отступы ================= -->
+    <h2>Сетка, отступы, радиусы</h2>
+    <div class="scale">
+        <div>4 px</div><div>8 px</div><div>12 px</div><div>16 px</div>
+        <div>24 px</div><div>32 px</div><div>48 px</div><div>64 px</div>
+    </div>
+    <p class="meta" style="margin-top:12px">
+        Контейнер — 1400 px, боковые отступы 24 px (16 px на планшете, 14 px на мобильном).
+        Сетка карточек: <code>auto-fill, minmax(200px, 1fr)</code>; на мобильном — 140 px.
+        Радиусы: 10 px (поля), 14 px (карточки), 18–20 px (панели), 999 px (кнопки-пилюли).
+    </p>
+
+    <!-- ================= Адаптивность ================= -->
+    <h2>Адаптивные точки</h2>
+    <table>
+        <thead><tr><th>Диапазон</th><th>Макет</th><th>Что меняется</th></tr></thead>
+        <tbody>
+            <tr><td>≥ 1200 px</td><td>Десктоп 1440 px</td><td>Полное меню, поиск в шапке, 4–6 карточек в ряд</td></tr>
+            <tr><td>993–1199 px</td><td>Ноутбук</td><td>Меньше отступы, поиск уже</td></tr>
+            <tr><td>768–992 px</td><td>Планшет</td><td>Меню в бургере, двухколоночные блоки в одну колонку</td></tr>
+            <tr><td>577–767 px</td><td>Крупный телефон</td><td>Поиск на второй строке, карточки 140 px</td></tr>
+            <tr><td>≤ 576 px</td><td>Мобильный 375 px</td><td>Одна колонка, компактные отступы, таблицы со скроллом</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ================= Примеры компонентов ================= -->
+    <h2>Примеры компонентов</h2>
+    <div class="demo">
+        <button class="btn btn-primary">Смотреть</button>
+        <button class="btn btn-ghost">Трейлер</button>
+        <span style="color:#ffd166;font-weight:700">8.9</span>
+        <span style="color:#7fde9a;font-weight:700">8.1</span>
+        <span style="color:#9a9aa8">2026 · Фильм</span>
+        <span style="color:#2ea043">✓ Подписка активна</span>
+        <span style="color:#ff4d59">Пароли не совпадают</span>
+    </div>
+
+</div>
+</body>
+</html>

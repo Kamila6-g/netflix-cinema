@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!--
+  design/mockup.html — дизайн-макеты главной и типовых страниц.
+
+  Макеты построены на прототипах design/prototype.html и палитре design/palette.html.
+  Здесь показаны:
+    1. Главная страница (десктоп 1440 px);
+    2. Страница фильма;
+    3. Страница сериала (сезоны и эпизоды);
+    4. Личный кабинет;
+    5. Оплата тарифа;
+    6. Адаптивные состояния главной: 1440 / 768 / 375 px.
+
+  Постеры имитируются градиентами — внешние изображения не нужны,
+  файл открывается локально без сервера.
+-->
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NETFLIX — дизайн-макеты</title>
+    <style>
+        /* ================= Служебная оболочка страницы ================= */
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:#08080c;color:#f3f3f6;font-family:'Inter',system-ui,sans-serif;line-height:1.55;padding:36px 18px 80px}
+        .wrap{max-width:1320px;margin:0 auto}
+        h1{font-family:'Montserrat',sans-serif;font-size:32px;margin-bottom:6px}
+        .lead{color:#9a9aa8;font-size:14px;margin-bottom:30px}
+        h2{font-family:'Montserrat',sans-serif;font-size:21px;margin:44px 0 6px}
+        .hint{color:#9a9aa8;font-size:13px;margin-bottom:14px}
+
+        /* Рамка макета */
+        .screen{border:1px solid rgba(255,255,255,.12);border-radius:16px;overflow:hidden;background:#0b0b10;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+        .screen-bar{background:#15151f;color:#9a9aa8;font-size:11px;letter-spacing:.8px;padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between}
+        .screen-body{padding:0}
+
+        /* ================= Компоненты макета ================= */
+        .m-header{display:flex;align-items:center;gap:22px;padding:16px 26px;background:rgba(11,11,16,.92);border-bottom:1px solid rgba(255,255,255,.08)}
+        .m-logo{font-family:'Montserrat',sans-serif;font-weight:900;color:#e50914;font-size:19px;display:flex;align-items:center;gap:8px}
+        .m-logo i{width:26px;height:26px;border-radius:6px;background:#e50914;display:block}
+        .m-nav{display:flex;gap:20px;font-size:13px;color:#c9c9d4}
+        .m-search{flex:1;max-width:300px;margin-left:auto;background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:8px 16px;color:#6f6f80;font-size:12px}
+        .m-btn{border-radius:999px;padding:8px 18px;font-size:12px;font-weight:600;white-space:nowrap}
+        .m-btn.primary{background:#e50914;color:#fff}
+        .m-btn.ghost{border:1px solid rgba(255,255,255,.14);color:#f3f3f6}
+
+        .m-hero{position:relative;min-height:330px;display:flex;align-items:flex-end;padding:38px 26px;background:
+            radial-gradient(900px 300px at 70% 10%,rgba(229,9,20,.35),transparent 60%),
+            linear-gradient(120deg,#2b0b12,#0b0b10 65%)}
+        .m-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,#0b0b10 100%)}
+        .m-hero-in{position:relative;z-index:1;max-width:520px}
+        .m-hero h3{font-family:'Montserrat',sans-serif;font-size:38px;line-height:1.05;margin-bottom:10px}
+        .m-meta{display:flex;gap:12px;align-items:center;font-size:12px;color:#b9b9c8;margin-bottom:12px}
+        .m-rating{font-weight:700;color:#ffd166}
+        .m-chip{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:2px 9px;font-size:11px}
+        .m-hero p{font-size:13px;color:#cfd0dd;margin-bottom:16px;max-width:440px}
+        .m-actions{display:flex;gap:10px}
+
+        .m-section{padding:22px 26px 6px}
+        .m-sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .m-sec-head h4{font-family:'Montserrat',sans-serif;font-size:17px;display:flex;align-items:center;gap:9px}
+        .m-sec-head h4::before{content:'';width:3px;height:17px;background:#e50914;border-radius:2px}
+        .m-sec-head span{font-size:11px;color:#9a9aa8}
+
+        .m-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+        .m-card{border-radius:10px;overflow:hidden;background:#17171f;border:1px solid rgba(255,255,255,.08)}
+        .m-poster{aspect-ratio:2/3;position:relative;display:flex;align-items:flex-end;padding:8px;font-size:10px;color:#fff}
+        .m-poster.p1{background:linear-gradient(160deg,#7a1320,#1b1b28)}
+        .m-poster.p2{background:linear-gradient(160deg,#1d3a6e,#101018)}
+        .m-poster.p3{background:linear-gradient(160deg,#5b2a7a,#14141c)}
+        .m-poster.p4{background:linear-gradient(160deg,#0f5b52,#101018)}
+        .m-poster.p5{background:linear-gradient(160deg,#7a5b13,#14141c)}
+        .m-poster.p6{background:linear-gradient(160deg,#4a4a6a,#101018)}
+        .m-poster .mark{position:absolute;top:7px;left:7px;background:#e50914;border-radius:999px;padding:2px 7px;font-size:9px;font-weight:700}
+        .m-card-body{padding:7px 9px 9px;font-size:11px}
+        .m-card-body b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .m-card-body span{color:#9a9aa8;font-size:10px}
+
+        .m-cats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+        .m-cat{border:1px solid rgba(255,255,255,.08);background:#17171f;border-radius:10px;padding:14px 10px;text-align:center;font-size:12px;color:#dcdce6}
+        .m-cat i{display:block;font-size:16px;margin-bottom:4px;font-style:normal;color:#e50914}
+
+        .m-footer{border-top:1px solid rgba(255,255,255,.08);background:#101018;padding:22px 26px;display:flex;justify-content:space-between;font-size:11px;color:#9a9aa8;margin-top:20px}
+
+        /* Страница тайтла */
+        .m-title{display:grid;grid-template-columns:200px 1fr;gap:26px;padding:28px 26px;background:linear-gradient(120deg,#1a0b10,#0b0b10 70%)}
+        .m-title .poster{aspect-ratio:2/3;border-radius:12px;background:linear-gradient(160deg,#7a1320,#1b1b28);border:1px solid rgba(255,255,255,.1)}
+        .m-title h3{font-family:'Montserrat',sans-serif;font-size:30px;margin-bottom:8px}
+        .m-title .desc{font-size:13px;color:#cfd0dd;margin:12px 0 16px}
+        .m-people{display:flex;gap:12px;margin-top:14px}
+        .m-people div{width:62px;text-align:center;font-size:9px;color:#9a9aa8}
+        .m-people i{display:block;width:44px;height:44px;border-radius:50%;margin:0 auto 5px;background:#2a2a38;border:1px solid rgba(255,255,255,.12)}
+
+        .m-trailer{height:190px;margin:0 26px;border-radius:12px;background:linear-gradient(135deg,#241722,#111119);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;color:#9a9aa8;font-size:12px}
+        .m-tabs{display:flex;gap:8px;padding:18px 26px 0}
+        .m-tab{border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 14px;font-size:11px;color:#c9c9d4}
+        .m-tab.active{background:#e50914;border-color:transparent;color:#fff}
+        .m-episodes{padding:12px 26px 0;display:grid;gap:8px}
+        .m-ep{display:flex;justify-content:space-between;background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:9px 12px;font-size:11px;color:#cfd0dd}
+        .m-ep b{color:#ff4d59}
+
+        /* Кабинет */
+        .m-cabinet{display:grid;grid-template-columns:240px 1fr;gap:20px;padding:24px 26px}
+        .m-profile{background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:22px;text-align:center}
+        .m-avatar{width:64px;height:64px;border-radius:50%;background:#e50914;display:grid;place-items:center;font-size:24px;font-weight:800;margin:0 auto 10px}
+        .m-profile b{font-size:14px}
+        .m-profile p{font-size:11px;color:#9a9aa8;margin-top:2px}
+        .m-role{display:inline-block;margin-top:10px;font-size:10px;color:#2ea043;background:rgba(46,160,67,.12);border-radius:999px;padding:3px 10px}
+        .m-profile .m-btn{display:block;margin-top:14px}
+        .m-subline{font-size:10px;color:#9a9aa8;margin-top:10px}
+
+        /* Оплата */
+        .m-plans{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:22px 26px}
+        .m-plan{background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px 16px;position:relative}
+        .m-plan.hot{border-color:#e50914;background:linear-gradient(160deg,rgba(229,9,20,.14),#17171f)}
+        .m-plan .tag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#e50914;font-size:9px;font-weight:700;padding:2px 9px;border-radius:999px}
+        .m-plan h5{font-family:'Montserrat',sans-serif;font-size:14px}
+        .m-plan .price{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;margin:6px 0 10px}
+        .m-plan ul{list-style:none;font-size:10px;color:#cfd0dd;display:grid;gap:5px;margin-bottom:12px}
+        .m-plan li::before{content:'✓ ';color:#2ea043}
+        .m-plan .m-btn{width:100%;text-align:center;display:block}
+        .m-pay{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 26px 24px}
+        .m-pay > div{background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px}
+        .m-field{background:#101018;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 10px;font-size:10px;color:#6f6f80;margin-top:8px}
+        .m-receipt{display:flex;justify-content:space-between;font-size:10px;color:#9a9aa8;border-bottom:1px solid rgba(255,255,255,.07);padding:6px 0}
+        .m-receipt b{color:#fff}
+
+        /* ================= Адаптивные состояния ================= */
+        .devices{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+        .device{border:1px solid rgba(255,255,255,.14);border-radius:14px;overflow:hidden;background:#0b0b10}
+        .device .cap{background:#15151f;font-size:10px;letter-spacing:.8px;color:#9a9aa8;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+        .device .viewport{padding:0}
+        .device.desktop{width:100%;max-width:920px}
+        .device.tablet{width:330px}
+        .device.mobile{width:190px}
+
+        /* Упрощённая шапка для схем */
+        .a-header{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.08);background:#101018}
+        .a-logo{font-family:'Montserrat',sans-serif;font-weight:900;color:#e50914;font-size:10px}
+        .a-nav{display:flex;gap:7px;flex:1;justify-content:center;font-size:7px;color:#9a9aa8}
+        .a-burger{width:14px;height:2px;background:#c9c9d4;box-shadow:0 4px 0 #c9c9d4,0 -4px 0 #c9c9d4}
+        .a-search{background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:999px;font-size:6px;color:#6f6f80;padding:4px 8px}
+
+        .device.tablet .a-nav,.device.mobile .a-nav{display:none}
+        .device.tablet .a-search,.device.mobile .a-search{display:none}
+        .device.mobile .a-header{padding:7px 8px}
+
+        .a-hero{height:96px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;padding:12px;
+            background:radial-gradient(300px 120px at 70% 0,rgba(229,9,20,.35),transparent 60%),linear-gradient(120deg,#2b0b12,#0b0b10)}
+        .a-hero i{display:block;height:9px;width:52%;background:#f3f3f6;border-radius:2px}
+        .a-hero s{display:block;height:5px;width:38%;background:#9a9aa8;border-radius:2px;text-decoration:none}
+        .a-hero b{display:block;height:14px;width:64px;background:#e50914;border-radius:999px;margin-top:3px}
+
+        .device.tablet .a-hero{height:82px}
+        .device.mobile .a-hero{height:64px}
+
+        .a-cards{display:grid;gap:7px;padding:10px 12px}
+        .device.desktop .a-cards{grid-template-columns:repeat(6,1fr)}
+        .device.tablet .a-cards{grid-template-columns:repeat(4,1fr)}
+        .device.mobile .a-cards{grid-template-columns:repeat(2,1fr)}
+        .a-cards i{aspect-ratio:2/3;border-radius:5px;background:linear-gradient(160deg,#2a2a3a,#17171f);border:1px solid rgba(255,255,255,.07);display:block}
+
+        .device.mobile .a-cards{padding:8px}
+        .a-foot{height:26px;background:#101018;border-top:1px solid rgba(255,255,255,.08)}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>NETFLIX — дизайн-макеты</h1>
+    <p class="lead">
+        Цветные макеты на основе <code>design/palette.html</code> и прототипов <code>design/prototype.html</code>.
+        Внизу — адаптивные состояния главной для 1440, 768 и 375 px.
+    </p>
+
+    <!-- ================= 1. Главная ================= -->
+    <h2>1. Главная страница · десктоп 1440 px</h2>
+    <p class="hint">Hero-баннер, поиск, «Топ новинки», «Популярное», категории, персональные рекомендации, подборки.</p>
+
+    <div class="screen">
+        <div class="screen-bar"><span>ГЛАВНАЯ · 1440 px</span><span>design/mockup.html</span></div>
+        <div class="screen-body">
+
+            <div class="m-header">
+                <div class="m-logo"><i></i>NETFLIX</div>
+                <div class="m-nav"><span>Главная</span><span>Фильмы</span><span>Сериалы</span><span>Каталог</span><span>Категории ▾</span><span>Подписка</span></div>
+                <div class="m-search">Поиск фильмов и сериалов…</div>
+                <div class="m-btn ghost">Вход</div>
+                <div class="m-btn primary">Регистрация</div>
+            </div>
+
+            <div class="m-hero">
+                <div class="m-hero-in">
+                    <h3>Хроники Севера</h3>
+                    <div class="m-meta"><span class="m-rating">9.1</span><span class="m-chip">Сериал</span><span>2025</span><span>2 сезона</span></div>
+                    <p>Молодая волшебница отправляется на поиски древнего артефакта, способного изменить ход времён.</p>
+                    <div class="m-actions"><span class="m-btn primary">Смотреть</span><span class="m-btn ghost">Трейлер</span></div>
+                </div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Найти фильм или сериал</h4></div>
+                <div style="display:flex;gap:10px;max-width:620px">
+                    <div class="m-search" style="flex:1;max-width:none;margin:0;padding:11px 18px">Название, актёр или слово из описания…</div>
+                    <span class="m-btn primary" style="padding:11px 22px">Искать</span>
+                </div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Топ новинки</h4><span>Смотреть все →</span></div>
+                <div class="m-row">
+                    <div class="m-card"><div class="m-poster p1"><span class="mark">Новинка</span></div><div class="m-card-body"><b>Тёмный горизонт</b><span>8.4 · 2025</span></div></div>
+                    <div class="m-card"><div class="m-poster p2"><span class="mark">Новинка</span></div><div class="m-card-body"><b>Небо над нами</b><span>8.2 · 2024</span></div></div>
+                    <div class="m-card"><div class="m-poster p3"><span class="mark">Новинка</span></div><div class="m-card-body"><b>Хроники Севера</b><span>9.1 · 2025</span></div></div>
+                    <div class="m-card"><div class="m-poster p4"><span class="mark">Новинка</span></div><div class="m-card-body"><b>Код 404</b><span>8.9 · 2025</span></div></div>
+                    <div class="m-card"><div class="m-poster p5"><span class="mark">Новинка</span></div><div class="m-card-body"><b>Красная комната</b><span>7.5 · 2025</span></div></div>
+                    <div class="m-card"><div class="m-poster p6"><span class="mark">Новинка</span></div><div class="m-card-body"><b>Тихий океан</b><span>8.7 · 2025</span></div></div>
+                </div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Популярное</h4><span>Смотреть все →</span></div>
+                <div class="m-row">
+                    <div class="m-card"><div class="m-poster p3"></div><div class="m-card-body"><b>Хроники Севера</b><span>9.1 · Сериал</span></div></div>
+                    <div class="m-card"><div class="m-poster p4"></div><div class="m-card-body"><b>Код 404</b><span>8.9 · Сериал</span></div></div>
+                    <div class="m-card"><div class="m-poster p6"></div><div class="m-card-body"><b>Тихий океан</b><span>8.7 · Сериал</span></div></div>
+                    <div class="m-card"><div class="m-poster p2"></div><div class="m-card-body"><b>Ночной патруль</b><span>8.6 · Сериал</span></div></div>
+                    <div class="m-card"><div class="m-poster p1"></div><div class="m-card-body"><b>Тёмный горизонт</b><span>8.4 · Фильм</span></div></div>
+                    <div class="m-card"><div class="m-poster p5"></div><div class="m-card-body"><b>Небо над нами</b><span>8.2 · Фильм</span></div></div>
+                </div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Категории</h4><span>Весь каталог →</span></div>
+                <div class="m-cats">
+                    <div class="m-cat"><i>▣</i>Боевики</div>
+                    <div class="m-cat"><i>▣</i>Драмы</div>
+                    <div class="m-cat"><i>▣</i>Комедии</div>
+                    <div class="m-cat"><i>▣</i>Триллеры</div>
+                    <div class="m-cat"><i>▣</i>Ужасы</div>
+                    <div class="m-cat"><i>▣</i>Фэнтези</div>
+                </div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Рекомендуем вам</h4><span>по вашему избранному и истории</span></div>
+                <div class="m-row">
+                    <div class="m-card"><div class="m-poster p5"></div><div class="m-card-body"><b>Охота на тень</b><span>8.1 · Фильм</span></div></div>
+                    <div class="m-card"><div class="m-poster p2"></div><div class="m-card-body"><b>Городские легенды</b><span>7.8 · Сериал</span></div></div>
+                    <div class="m-card"><div class="m-poster p1"></div><div class="m-card-body"><b>Стальной кулак</b><span>7.7 · Фильм</span></div></div>
+                    <div class="m-card"><div class="m-poster p3"></div><div class="m-card-body"><b>Бар Улыбка</b><span>7.4 · Сериал</span></div></div>
+                    <div class="m-card"><div class="m-poster p6"></div><div class="m-card-body"><b>Последний рассвет</b><span>7.9 · Фильм</span></div></div>
+                    <div class="m-card"><div class="m-poster p4"></div><div class="m-card-body"><b>Аляска</b><span>8.0 · Фильм</span></div></div>
+                </div>
+            </div>
+
+            <div class="m-footer">
+                <span>© 2026 NETFLIX · Кинотеатр нового поколения</span>
+                <span>Фильмы · Сериалы · Избранное · Тарифы</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 2. Страница фильма ================= -->
+    <h2>2. Страница фильма</h2>
+    <p class="hint">Постер, описание, рейтинг, режиссёр и актёры, трейлер, похожие фильмы, отзывы.</p>
+
+    <div class="screen">
+        <div class="screen-bar"><span>СТРАНИЦА ФИЛЬМА · /content.php?id=1</span><span>десктоп</span></div>
+        <div class="screen-body">
+            <div class="m-header">
+                <div class="m-logo"><i></i>NETFLIX</div>
+                <div class="m-nav"><span>Главная</span><span>Фильмы</span><span>Сериалы</span><span>Каталог</span></div>
+                <div class="m-search">Поиск…</div>
+            </div>
+
+            <div class="m-title">
+                <div class="poster"></div>
+                <div>
+                    <div style="font-size:10px;color:#9a9aa8;margin-bottom:8px">Главная / Боевики / Тёмный горизонт</div>
+                    <h3>Тёмный горизонт</h3>
+                    <div class="m-meta"><span class="m-rating">8.4</span><span class="m-chip">Фильм</span><span>2025</span><span>128 мин</span><span class="m-chip">Боевики</span></div>
+                    <p class="desc">Бывший агент вынужден вернуться в игру, чтобы остановить международную сеть наёмников.</p>
+                    <div class="m-actions"><span class="m-btn primary">Смотреть трейлер</span><span class="m-btn ghost">В избранное</span><span class="m-btn ghost">Оформить подписку</span></div>
+                    <div style="font-size:11px;color:#9a9aa8;margin-top:14px">Режиссёр</div>
+                    <div class="m-people">
+                        <div><i></i>Сергей Морозов</div><div><i></i>Алексей Новиков</div>
+                        <div><i></i>Иван Петров</div><div><i></i>Анна Смирнова</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-trailer">Трейлер · встроенный плеер 16:9</div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Похожие фильмы</h4></div>
+                <div class="m-row">
+                    <div class="m-card"><div class="m-poster p2"></div><div class="m-card-body"><b>Стальной кулак</b><span>7.7</span></div></div>
+                    <div class="m-card"><div class="m-poster p4"></div><div class="m-card-body"><b>Охота на тень</b><span>8.1</span></div></div>
+                    <div class="m-card"><div class="m-poster p6"></div><div class="m-card-body"><b>Аляска</b><span>8.0</span></div></div>
+                    <div class="m-card"><div class="m-poster p5"></div><div class="m-card-body"><b>Небо над нами</b><span>8.2</span></div></div>
+                    <div class="m-card"><div class="m-poster p1"></div><div class="m-card-body"><b>Последний рассвет</b><span>7.9</span></div></div>
+                    <div class="m-card"><div class="m-poster p3"></div><div class="m-card-body"><b>Красная комната</b><span>7.5</span></div></div>
+                </div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Отзывы и оценки</h4><span>Средняя оценка зрителей: 7,5/10</span></div>
+                <div style="display:grid;gap:8px">
+                    <div class="m-ep"><span><b>dmitry_k</b> · Крепкий боевик на вечер</span><span>7/10</span></div>
+                    <div class="m-ep"><span><b>anna_s</b> · Атмосфера и музыка на высоте</span><span>9/10</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 3. Страница сериала ================= -->
+    <h2>3. Страница сериала</h2>
+    <p class="hint">Всё как у фильма, плюс «Сезоны и эпизоды» с переключением сезонов.</p>
+
+    <div class="screen">
+        <div class="screen-bar"><span>СТРАНИЦА СЕРИАЛА · /content.php?id=5</span><span>десктоп</span></div>
+        <div class="screen-body">
+            <div class="m-header">
+                <div class="m-logo"><i></i>NETFLIX</div>
+                <div class="m-nav"><span>Главная</span><span>Фильмы</span><span>Сериалы</span><span>Каталог</span></div>
+            </div>
+
+            <div class="m-title">
+                <div class="poster" style="background:linear-gradient(160deg,#5b2a7a,#14141c)"></div>
+                <div>
+                    <div style="font-size:10px;color:#9a9aa8;margin-bottom:8px">Главная / Фэнтези / Хроники Севера</div>
+                    <h3>Хроники Севера</h3>
+                    <div class="m-meta"><span class="m-rating">9.1</span><span class="m-chip">Сериал</span><span>2025</span><span>2 сезона</span></div>
+                    <p class="desc">Молодая волшебница отправляется на поиски древнего артефакта, способного изменить ход времён.</p>
+                    <div class="m-actions"><span class="m-btn primary">Смотреть трейлер</span><span class="m-btn ghost">В избранное</span></div>
+                    <div class="m-people">
+                        <div><i></i>Иван Петров</div><div><i></i>Анна Смирнова</div><div><i></i>Алексей Новиков</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-trailer">Трейлер · встроенный плеер 16:9</div>
+
+            <div class="m-tabs">
+                <span class="m-tab active">Сезон 1</span>
+                <span class="m-tab">Сезон 2</span>
+            </div>
+            <div class="m-episodes">
+                <div class="m-ep"><span><b>S1E1</b> · Пророчество</span><span>52 мин</span></div>
+                <div class="m-ep"><span><b>S1E2</b> · Лес тысячи теней</span><span>48 мин</span></div>
+                <div class="m-ep"><span><b>S1E3</b> · Ледяной трон</span><span>50 мин</span></div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Похожие сериалы</h4></div>
+                <div class="m-row">
+                    <div class="m-card"><div class="m-poster p6"></div><div class="m-card-body"><b>Тихий океан</b><span>8.7</span></div></div>
+                    <div class="m-card"><div class="m-poster p4"></div><div class="m-card-body"><b>Код 404</b><span>8.9</span></div></div>
+                    <div class="m-card"><div class="m-poster p2"></div><div class="m-card-body"><b>Ночной патруль</b><span>8.6</span></div></div>
+                    <div class="m-card"><div class="m-poster p1"></div><div class="m-card-body"><b>Городские легенды</b><span>7.8</span></div></div>
+                    <div class="m-card"><div class="m-poster p3"></div><div class="m-card-body"><b>Бар Улыбка</b><span>7.4</span></div></div>
+                    <div class="m-card"><div class="m-poster p5"></div><div class="m-card-body"><b>Хроники Севера</b><span>9.1</span></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 4. Личный кабинет ================= -->
+    <h2>4. Личный кабинет</h2>
+    <p class="hint">Доступ после входа. Слева аккаунт и подписка, справа избранное, история и платежи.</p>
+
+    <div class="screen">
+        <div class="screen-bar"><span>ЛИЧНЫЙ КАБИНЕТ · /profile.php</span><span>десктоп</span></div>
+        <div class="screen-body">
+            <div class="m-header">
+                <div class="m-logo"><i></i>NETFLIX</div>
+                <div class="m-nav"><span>Главная</span><span>Фильмы</span><span>Сериалы</span><span>Каталог</span></div>
+                <div class="m-btn primary" style="margin-left:auto">Профиль</div>
+            </div>
+
+            <div class="m-cabinet">
+                <div class="m-profile">
+                    <div class="m-avatar">A</div>
+                    <b>anna_s</b>
+                    <p>anna@example.com</p>
+                    <span class="m-role">Подписчик</span>
+                    <div class="m-subline">Подписка активна до 15.12.2026</div>
+                    <span class="m-btn primary">Продлить подписку</span>
+                </div>
+                <div>
+                    <div class="m-sec-head"><h4>Избранное (2)</h4><span>Управлять →</span></div>
+                    <div class="m-row" style="grid-template-columns:repeat(4,1fr)">
+                        <div class="m-card"><div class="m-poster p3"></div><div class="m-card-body"><b>Хроники Севера</b></div></div>
+                        <div class="m-card"><div class="m-poster p4"></div><div class="m-card-body"><b>Код 404</b></div></div>
+                    </div>
+
+                    <div class="m-sec-head" style="margin-top:20px"><h4>История просмотров</h4></div>
+                    <div class="m-row" style="grid-template-columns:repeat(4,1fr)">
+                        <div class="m-card"><div class="m-poster p1"></div><div class="m-card-body"><b>Тёмный горизонт</b></div></div>
+                        <div class="m-card"><div class="m-poster p5"></div><div class="m-card-body"><b>Небо над нами</b></div></div>
+                    </div>
+
+                    <div class="m-sec-head" style="margin-top:20px"><h4>Платежи</h4></div>
+                    <div style="background:#17171f;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px">
+                        <div class="m-receipt"><span>20.11.2026 · Стандарт</span><b style="color:#2ea043">Оплачено · 499 ₽</b></div>
+                        <div class="m-receipt" style="border-bottom:none"><span>20.10.2026 · Базовый</span><b style="color:#9a9aa8">Отменён · 299 ₽</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 5. Оплата ================= -->
+    <h2>5. Страница оплаты и тестовый шлюз</h2>
+    <p class="hint">Тарифы из БД, выделенный популярный тариф, платёжная форма (тестовый режим) и чек.</p>
+
+    <div class="screen">
+        <div class="screen-bar"><span>ОПЛАТА · /payment.php</span><span>десктоп</span></div>
+        <div class="screen-body">
+            <div class="m-header">
+                <div class="m-logo"><i></i>NETFLIX</div>
+                <div class="m-nav"><span>Главная</span><span>Фильмы</span><span>Сериалы</span><span>Каталог</span></div>
+            </div>
+
+            <div class="m-section">
+                <div class="m-sec-head"><h4>Выберите подписку</h4><span>Оплата в тестовом режиме</span></div>
+            </div>
+
+            <div class="m-plans">
+                <div class="m-plan">
+                    <h5>Базовый</h5>
+                    <div class="price">299 ₽ <small style="font-size:10px;color:#9a9aa8">/мес</small></div>
+                    <ul><li>HD 720p</li><li>Один экран</li><li>Полный каталог</li></ul>
+                    <span class="m-btn ghost">Оформить</span>
+                </div>
+                <div class="m-plan hot">
+                    <span class="tag">Популярный</span>
+                    <h5>Стандарт</h5>
+                    <div class="price">499 ₽ <small style="font-size:10px;color:#9a9aa8">/мес</small></div>
+                    <ul><li>Full HD 1080p</li><li>Два экрана</li><li>Скачивание</li></ul>
+                    <span class="m-btn primary">Выбрать</span>
+                </div>
+                <div class="m-plan">
+                    <h5>Премиум</h5>
+                    <div class="price">799 ₽ <small style="font-size:10px;color:#9a9aa8">/мес</small></div>
+                    <ul><li>4K Ultra HD</li><li>Четыре экрана</li><li>Ранний доступ</li></ul>
+                    <span class="m-btn ghost">Оформить</span>
+                </div>
+                <div class="m-plan">
+                    <h5>Год без границ</h5>
+                    <div class="price">4 990 ₽ <small style="font-size:10px;color:#9a9aa8">/год</small></div>
+                    <ul><li>Всё из «Премиум»</li><li>Оплата раз в год</li><li>Экономия 46 %</li></ul>
+                    <span class="m-btn ghost">Оформить</span>
+                </div>
+            </div>
+
+            <div class="m-pay">
+                <div>
+                    <div style="font-size:11px;color:#ff8a92;border:1px solid rgba(229,9,20,.5);border-radius:999px;padding:2px 9px;display:inline-block;margin-bottom:10px">ТЕСТОВЫЙ РЕЖИМ</div>
+                    <div style="font-family:Montserrat,sans-serif;font-size:18px;font-weight:800">Стандарт</div>
+                    <div style="font-family:Montserrat,sans-serif;font-size:28px;font-weight:900;margin:6px 0">499 ₽</div>
+                    <div style="font-size:10px;color:#9a9aa8">Срок подписки: 30 дней · PAY-20261120-1a2b3c</div>
+                    <div class="m-receipt" style="margin-top:12px"><span>Full HD 1080p</span><b>✓</b></div>
+                    <div class="m-receipt"><span>Два экрана</span><b>✓</b></div>
+                    <div class="m-receipt" style="border-bottom:none"><span>Скачивание</span><b>✓</b></div>
+                </div>
+                <div>
+                    <div style="font-family:Montserrat,sans-serif;font-size:16px;font-weight:800">Оплата картой</div>
+                    <div style="font-size:10px;color:#9a9aa8;margin-bottom:6px">Тестовая карта 4111 1111 1111 1111</div>
+                    <div class="m-field">Номер карты · 0000 0000 0000 0000</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <div class="m-field">Срок · ММ/ГГ</div>
+                        <div class="m-field">CVC · 123</div>
+                    </div>
+                    <div class="m-btn primary" style="display:block;text-align:center;margin-top:12px">Оплатить</div>
+                    <div class="m-btn ghost" style="display:block;text-align:center;margin-top:8px">Отменить оплату</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 6. Адаптив ================= -->
+    <h2>6. Адаптивные макеты главной: 1440 / 768 / 375 px</h2>
+    <p class="hint">На планшете меню сворачивается в бургер, на мобильном поиск уходит на вторую строку, карточки идут по две.</p>
+
+    <div class="devices">
+
+        <div class="device desktop">
+            <div class="cap">ДЕСКТОП · 1440 px</div>
+            <div class="viewport">
+                <div class="a-header">
+                    <div class="a-logo">NETFLIX</div>
+                    <div class="a-nav"><span>Главная</span><span>Фильмы</span><span>Сериалы</span><span>Каталог</span><span>Подписка</span></div>
+                    <div class="a-search">Поиск…</div>
+                    <div class="a-logo" style="color:#fff;font-size:8px">Профиль</div>
+                </div>
+                <div class="a-hero"><i></i><s></s><b></b></div>
+                <div class="a-cards"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="a-cards"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+        </div>
+
+        <div class="device tablet">
+            <div class="cap">ПЛАНШЕТ · 768 px</div>
+            <div class="viewport">
+                <div class="a-header">
+                    <div class="a-logo">NETFLIX</div>
+                    <div class="a-nav"><span>Главная</span></div>
+                    <div class="a-burger"></div>
+                </div>
+                <div class="a-hero"><i></i><s></s><b></b></div>
+                <div class="a-cards"><i></i><i></i><i></i><i></i></div>
+                <div class="a-cards"><i></i><i></i><i></i><i></i></div>
+            </div>
+        </div>
+
+        <div class="device mobile">
+            <div class="cap">МОБИЛЬНЫЙ · 375 px</div>
+            <div class="viewport">
+                <div class="a-header">
+                    <div class="a-logo">NETFLIX</div>
+                    <div class="a-burger"></div>
+                </div>
+                <div class="a-hero"><i></i><s></s><b></b></div>
+                <div class="a-cards"><i></i><i></i></div>
+                <div class="a-cards"><i></i><i></i></div>
+                <div class="a-cards"><i></i><i></i></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

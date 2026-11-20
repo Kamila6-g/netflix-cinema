@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--
+  design/prototype.html — прототипы (wireframes) главной и типовых страниц.
+
+  Прототип показывает структуру и иерархию блоков без цвета и графики.
+  Каждый блок подписан; ниже — мобильная и планшетная схемы главной.
+  На этих прототипах построены дизайн-макеты design/mockup.html
+  и вёрстка проекта (assets/css/style.css).
+-->
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NETFLIX — прототипы страниц</title>
+    <style>
+        /* --- Служебное оформление страницы прототипов --- */
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:#f4f4f6;color:#1c1c22;font-family:'Inter',system-ui,sans-serif;line-height:1.5;padding:36px 18px 70px}
+        .wrap{max-width:1180px;margin:0 auto}
+        h1{font-family:'Montserrat',sans-serif;font-size:30px;margin-bottom:6px}
+        .lead{color:#60606e;font-size:14px;margin-bottom:28px}
+        h2{font-family:'Montserrat',sans-serif;font-size:20px;margin:38px 0 8px}
+        .hint{color:#77778a;font-size:13px;margin-bottom:14px}
+
+        /* Лист прототипа */
+        .frame{background:#fff;border:2px solid #2a2a33;border-radius:6px;overflow:hidden;margin-bottom:34px}
+        .bar{height:26px;background:#2a2a33;color:#fff;font-size:11px;display:flex;align-items:center;padding:0 10px;letter-spacing:.6px}
+        .canvas{padding:14px;display:grid;gap:12px}
+
+        /* Базовые «серые» блоки */
+        .box{border:1.5px dashed #8b8b99;border-radius:4px;background:#fafafa;color:#55555f;
+             font-size:11px;padding:8px;display:flex;align-items:center;justify-content:center;text-align:center;min-height:40px}
+        .solid{background:#dcdce3;border:1.5px solid #8b8b99;color:#33333c;font-weight:600}
+        .header-row{display:flex;align-items:center;gap:10px;border:1.5px solid #55555f;border-radius:4px;padding:8px;background:#ececf1}
+        .logo-box{width:86px;height:26px;background:#55555f;color:#fff;font-size:10px;display:grid;place-items:center;border-radius:3px}
+        .nav-line{display:flex;gap:8px;flex:1;justify-content:center}
+        .nav-line span{width:52px;height:10px;background:#b6b6c2;border-radius:2px}
+        .pill{width:78px;height:24px;border:1.5px solid #55555f;border-radius:999px;background:#fff}
+
+        .hero-box{height:150px;background:repeating-linear-gradient(45deg,#e6e6ec,#e6e6ec 10px,#f2f2f6 10px,#f2f2f6 20px);
+                  border:1.5px dashed #8b8b99;border-radius:4px;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;gap:8px}
+        .hero-box .t{width:46%;height:16px;background:#55555f;border-radius:2px}
+        .hero-box .m{width:32%;height:9px;background:#9a9aa8;border-radius:2px}
+        .hero-box .b{display:flex;gap:8px}
+        .hero-box .b i{display:block;width:92px;height:24px;background:#55555f;border-radius:999px}
+
+        .row-title{display:flex;justify-content:space-between;align-items:center}
+        .row-title b{width:150px;height:14px;background:#8b8b99;border-radius:2px;display:block}
+        .row-title i{width:64px;height:9px;background:#c4c4cf;border-radius:2px;display:block}
+
+        .cards{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+        .card-mini{aspect-ratio:2/3;border:1.5px solid #8b8b99;border-radius:4px;background:#f2f2f6;position:relative}
+        .card-mini::after{content:'';position:absolute;left:8px;right:8px;bottom:8px;height:8px;background:#c4c4cf;border-radius:2px}
+
+        .cats-mini{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+        .cats-mini div{height:56px;border:1.5px dashed #8b8b99;border-radius:4px;background:#fafafa}
+
+        .two-col{display:grid;grid-template-columns:280px 1fr;gap:14px}
+        .poster-col{height:260px;border:1.5px solid #8b8b99;border-radius:4px;background:#ececf1}
+        .info-col{display:grid;gap:8px;align-content:start}
+        .line{height:10px;background:#c4c4cf;border-radius:2px}
+        .line.w70{width:70%}.line.w50{width:50%}.line.w40{width:40%;background:#8b8b99;height:16px}
+        .people{display:flex;gap:10px;margin-top:6px}
+        .people div{width:64px;display:grid;gap:5px;justify-items:center}
+        .people i{width:44px;height:44px;border-radius:50%;background:#dcdce3;border:1.5px solid #8b8b99}
+        .people s{width:100%;height:7px;background:#c4c4cf;border-radius:2px}
+
+        .season-tabs{display:flex;gap:8px}
+        .season-tabs span{width:74px;height:24px;border:1.5px solid #8b8b99;border-radius:999px}
+        .episode-row{height:34px;border:1.5px dashed #8b8b99;border-radius:4px;background:#fafafa}
+
+        .footer-mini{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:14px;padding-top:10px;border-top:1.5px solid #b6b6c2}
+        .footer-mini div{height:52px;border:1.5px dashed #b6b6c2;border-radius:4px}
+
+        /* Адаптивные схемы */
+        .devices{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+        .device{border:2px solid #2a2a33;border-radius:10px;background:#fff;overflow:hidden}
+        .device .cap{background:#2a2a33;color:#fff;font-size:11px;padding:4px 10px;letter-spacing:.5px}
+        .device .body{padding:8px;display:grid;gap:8px}
+        .device.desktop{width:100%;max-width:760px}
+        .device.tablet{width:420px}
+        .device.mobile{width:240px}
+        .mini-bar{display:flex;gap:6px;align-items:center;background:#ececf1;border:1px solid #8b8b99;border-radius:4px;padding:5px}
+        .mini-bar .lg{width:46px;height:14px;background:#55555f;border-radius:2px}
+        .mini-bar .nv{flex:1;display:flex;gap:5px;justify-content:center}
+        .mini-bar .nv i{width:22px;height:7px;background:#b6b6c2;border-radius:1px}
+        .mini-hero{height:80px;background:#e6e6ec;border:1px dashed #8b8b99;border-radius:4px}
+        .mini-cards{display:grid;gap:6px}
+        .device.desktop .mini-cards{grid-template-columns:repeat(6,1fr)}
+        .device.tablet .mini-cards{grid-template-columns:repeat(4,1fr)}
+        .device.mobile .mini-cards{grid-template-columns:repeat(2,1fr)}
+        .mini-cards i{aspect-ratio:2/3;border:1px solid #8b8b99;border-radius:3px;background:#f2f2f6;display:block}
+        .note{font-size:12px;color:#60606e;margin-top:8px}
+        .badge-num{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#2a2a33;color:#fff;font-size:10px;margin-right:6px}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>NETFLIX — прототипы страниц</h1>
+    <p class="lead">
+        Wireframes главной и типовых страниц. Показывают состав блоков, порядок и приоритет.
+        Ниже — адаптивные схемы для десктопа, планшета и мобильного.
+    </p>
+
+    <!-- ================= Главная ================= -->
+    <h2><span class="badge-num">1</span>Главная страница</h2>
+    <p class="hint">Порядок блоков: шапка → hero → поиск → новинки → популярное → категории → рекомендации → фильмы → сериалы.</p>
+
+    <div class="frame">
+        <div class="bar">ГЛАВНАЯ · 1440 px</div>
+        <div class="canvas">
+            <div class="header-row">
+                <div class="logo-box">NETFLIX</div>
+                <div class="nav-line"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="pill"></div><div class="pill"></div>
+            </div>
+
+            <div class="hero-box">
+                <div class="t"></div><div class="m"></div>
+                <div class="b"><i></i><i></i></div>
+            </div>
+
+            <div class="box" style="min-height:52px">Поиск: поле ввода + кнопка «Искать» (GET → search.php)</div>
+
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cats-mini"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+
+            <div class="footer-mini"><div></div><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- ================= Каталог ================= -->
+    <h2><span class="badge-num">2</span>Каталог и фильтрация по категории</h2>
+    <p class="hint">Одна страница для фильмов и сериалов: фильтры «тип», «сортировка», пагинация; категория приходит в URL.</p>
+
+    <div class="frame">
+        <div class="bar">КАТАЛОГ · /catalog.php?category=comedy</div>
+        <div class="canvas">
+            <div class="header-row"><div class="logo-box">NETFLIX</div><div class="nav-line"><span></span><span></span><span></span></div><div class="pill"></div></div>
+            <div class="row-title"><b></b><i></i></div>
+            <div style="display:flex;gap:10px;align-items:flex-end">
+                <div class="box" style="width:130px">Тип ▾</div>
+                <div class="box" style="width:170px">Сортировка ▾</div>
+                <div class="box" style="width:150px">Сбросить фильтры</div>
+            </div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+            <div class="box" style="min-height:34px">Пагинация: ← 1 2 3 →</div>
+        </div>
+    </div>
+
+    <!-- ================= Страница фильма ================= -->
+    <h2><span class="badge-num">3</span>Страница фильма</h2>
+    <p class="hint">Описание и оценки, режиссёры и актёры, трейлер, похожие фильмы, отзывы.</p>
+
+    <div class="frame">
+        <div class="bar">СТРАНИЦА ФИЛЬМА · /content.php?id=N (type=movie)</div>
+        <div class="canvas">
+            <div class="header-row"><div class="logo-box">NETFLIX</div><div class="nav-line"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="two-col">
+                <div class="poster-col"></div>
+                <div class="info-col">
+                    <div class="line w40"></div>
+                    <div class="line w50"></div>
+                    <div class="line"></div><div class="line"></div><div class="line w70"></div>
+                    <div style="display:flex;gap:8px;margin-top:6px"><div class="box" style="width:110px;min-height:28px">Смотреть</div><div class="box" style="width:110px;min-height:28px">В избранное</div></div>
+                    <div class="people"><div><i></i><s></s></div><div><i></i><s></s></div><div><i></i><s></s></div><div><i></i><s></s></div></div>
+                </div>
+            </div>
+            <div class="box" style="height:150px;display:grid;place-items:center">Трейлер · iframe 16:9</div>
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+            <div class="box" style="min-height:70px">Отзывы и оценки: список + форма (оценка 1–10, текст)</div>
+        </div>
+    </div>
+
+    <!-- ================= Страница сериала ================= -->
+    <h2><span class="badge-num">4</span>Страница сериала</h2>
+    <p class="hint">То же, что у фильма, плюс блок «Сезоны и эпизоды» с переключением сезонов.</p>
+
+    <div class="frame">
+        <div class="bar">СТРАНИЦА СЕРИАЛА · /content.php?id=N (type=series)</div>
+        <div class="canvas">
+            <div class="header-row"><div class="logo-box">NETFLIX</div><div class="nav-line"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="two-col">
+                <div class="poster-col"></div>
+                <div class="info-col">
+                    <div class="line w40"></div><div class="line w50"></div>
+                    <div class="line"></div><div class="line w70"></div>
+                    <div class="people"><div><i></i><s></s></div><div><i></i><s></s></div><div><i></i><s></s></div></div>
+                </div>
+            </div>
+            <div class="box" style="height:140px">Трейлер · iframe 16:9</div>
+            <div class="season-tabs"><span></span><span></span><span></span></div>
+            <div class="episode-row"></div><div class="episode-row"></div><div class="episode-row"></div>
+            <div class="row-title"><b></b><i></i></div>
+            <div class="cards"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+        </div>
+    </div>
+
+    <!-- ================= Личный кабинет ================= -->
+    <h2><span class="badge-num">5</span>Личный кабинет</h2>
+    <p class="hint">Доступ только после входа. Слева — карточка аккаунта и подписки, справа — избранное, история, платежи.</p>
+
+    <div class="frame">
+        <div class="bar">ЛИЧНЫЙ КАБИНЕТ · /profile.php</div>
+        <div class="canvas">
+            <div class="header-row"><div class="logo-box">NETFLIX</div><div class="nav-line"><span></span><span></span></div><div class="pill"></div></div>
+            <div class="two-col">
+                <div class="box" style="height:240px;display:grid;place-items:center">Аватар · имя · роль · статус подписки · кнопка «Продлить»</div>
+                <div style="display:grid;gap:12px">
+                    <div class="row-title"><b></b><i></i></div>
+                    <div class="cards" style="grid-template-columns:repeat(4,1fr)"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+                    <div class="row-title"><b></b><i></i></div>
+                    <div class="cards" style="grid-template-columns:repeat(4,1fr)"><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div></div>
+                    <div class="box" style="min-height:74px">Таблица платежей: дата · тариф · сумма · статус</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Оплата ================= -->
+    <h2><span class="badge-num">6</span>Страница оплаты и тестовый шлюз</h2>
+    <p class="hint">Тарифы из БД, выбор тарифа → платёжная форма (эмулятор) → чек.</p>
+
+    <div class="frame">
+        <div class="bar">ОПЛАТА · /payment.php → /gateway.php → /payment-success.php</div>
+        <div class="canvas">
+            <div class="header-row"><div class="logo-box">NETFLIX</div><div class="nav-line"><span></span><span></span></div><div class="pill"></div></div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+                <div class="box" style="height:190px;display:grid;place-items:center">Тариф 1<br>цена · возможности · кнопка</div>
+                <div class="box" style="height:190px;display:grid;place-items:center">Тариф 2<br>выделен</div>
+                <div class="box" style="height:190px;display:grid;place-items:center">Тариф 3</div>
+                <div class="box" style="height:190px;display:grid;place-items:center">Тариф 4</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div class="box" style="height:150px;display:grid;place-items:center">Сводка платежа: тариф, сумма, срок</div>
+                <div class="box" style="height:150px;display:grid;place-items:center">Форма карты: номер · срок · CVC · «Оплатить» · «Отменить»</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Адаптив ================= -->
+    <h2><span class="badge-num">7</span>Адаптивные схемы главной</h2>
+    <p class="hint">Три состояния одной страницы: 1440 px, 768 px, 375 px. На планшете меню уходит в бургер, на мобильном карточки идут по две в ряд.</p>
+
+    <div class="devices">
+        <div class="device desktop">
+            <div class="cap">ДЕСКТОП · 1440 px</div>
+            <div class="body">
+                <div class="mini-bar"><div class="lg"></div><div class="nv"><i></i><i></i><i></i><i></i><i></i></div><div class="lg" style="width:80px;background:#b6b6c2"></div></div>
+                <div class="mini-hero"></div>
+                <div class="mini-cards"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="mini-cards"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+        </div>
+
+        <div class="device tablet">
+            <div class="cap">ПЛАНШЕТ · 768 px</div>
+            <div class="body">
+                <div class="mini-bar"><div class="lg"></div><div class="nv"><i></i></div><div class="lg" style="width:20px;background:#b6b6c2"></div></div>
+                <div class="mini-hero"></div>
+                <div class="mini-cards"><i></i><i></i><i></i><i></i></div>
+                <div class="mini-cards"><i></i><i></i><i></i><i></i></div>
+            </div>
+        </div>
+
+        <div class="device mobile">
+            <div class="cap">МОБИЛЬНЫЙ · 375 px</div>
+            <div class="body">
+                <div class="mini-bar"><div class="lg" style="width:36px"></div><div class="nv"></div><div class="lg" style="width:18px;background:#b6b6c2"></div></div>
+                <div class="mini-hero" style="height:64px"></div>
+                <div class="mini-cards"><i></i><i></i></div>
+                <div class="mini-cards"><i></i><i></i></div>
+            </div>
+        </div>
+    </div>
+    <p class="note">Макеты в цвете и с реальными размерами блоков — в файле <code>design/mockup.html</code>.</p>
+
+</div>
+</body>
+</html>
