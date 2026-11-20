@@ -223,11 +223,19 @@ require 'includes/header.php';
 <?php if ($item['trailer']): ?>
 <section class="section" id="trailer">
     <div class="section-head"><h2 class="section-title">Трейлер</h2></div>
+    <?php
+    // Трейлеры размещены на RuTube: сервис доступен в РФ без обходных путей.
+    // Ссылка «Открыть на RuTube» — запасной вариант, если встраивание заблокировано.
+    $trailerWatchUrl = str_replace('/play/embed/', '/video/', (string)$item['trailer']);
+    ?>
     <div class="trailer-box">
         <iframe src="<?= e($item['trailer']) ?>" title="Трейлер «<?= e($item['title']) ?>»"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="clipboard-write; autoplay; fullscreen"
                 allowfullscreen loading="lazy"></iframe>
     </div>
+    <p class="trailer-link">
+        <a href="<?= e($trailerWatchUrl) ?>" target="_blank" rel="noopener noreferrer">Открыть трейлер на RuTube →</a>
+    </p>
 </section>
 <?php endif; ?>
 
