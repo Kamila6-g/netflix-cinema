@@ -181,7 +181,7 @@ CREATE TABLE `history` (
   KEY `content_id` (`content_id`),
   CONSTRAINT `history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `history_ibfk_2` FOREIGN KEY (`content_id`) REFERENCES `content` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,7 @@ CREATE TABLE `payments` (
   KEY `plan_id` (`plan_id`),
   CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `payments_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +226,6 @@ CREATE TABLE `payments` (
 
 LOCK TABLES `payments` WRITE;
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-INSERT INTO `payments` VALUES (1,3,2,499.00,'paid','PAY-20261120-e9bd3d4ed0c8','test_gateway','2026-11-20 11:27:26','2026-11-20 14:27:26');
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +306,7 @@ CREATE TABLE `reviews` (
   KEY `content_id` (`content_id`),
   CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`content_id`) REFERENCES `content` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +337,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +346,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin@cinemax.ru','$2y$10$Kcc0kL5H0DPXDBngBYkcHOeSiLDs72y5Gkg3CPemtWbJRxFPLW8yG','admin',NULL,'2026-10-23 07:35:49'),(2,'anna_s','anna@example.com','$2y$10$H/Hu/wEWMXg/lYS9VoAR6OuQDfNaRr4fqb6Uwc/.TQ8vGOibr8DUO','subscriber','2026-12-15 14:22:50','2026-11-20 11:22:50'),(3,'dmitry_k','dmitry@example.com','$2y$10$R5RGx1CQsWKdeg9INUt5Gu6pioFgypPyvT.kGPIDDNqz4QOHQYGd2','subscriber','2026-12-20 14:27:26','2026-11-20 11:22:50'),(4,'test_3812','t9633@mail.ru','$2y$10$3k3VT9sGkmuC1GxBRD1oAe5GP1mBu.DBKA2MOiDx0EgINZl1AG3qC','user',NULL,'2026-11-20 11:24:29');
+INSERT INTO `users` VALUES (1,'admin','admin@cinemax.ru','$2y$10$Kcc0kL5H0DPXDBngBYkcHOeSiLDs72y5Gkg3CPemtWbJRxFPLW8yG','admin',NULL,'2026-10-23 07:35:49'),(2,'anna_s','anna@example.com','$2y$10$H/Hu/wEWMXg/lYS9VoAR6OuQDfNaRr4fqb6Uwc/.TQ8vGOibr8DUO','subscriber','2026-12-15 14:22:50','2026-11-20 11:22:50'),(3,'dmitry_k','dmitry@example.com','$2y$10$R5RGx1CQsWKdeg9INUt5Gu6pioFgypPyvT.kGPIDDNqz4QOHQYGd2','user',NULL,'2026-11-20 11:22:50');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -360,4 +359,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-20 16:32:54
+-- Dump completed on 2026-11-20 16:37:37
