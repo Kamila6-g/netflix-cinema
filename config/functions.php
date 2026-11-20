@@ -107,6 +107,40 @@ function require_admin(): void
     exit;
 }
 
+/**
+ * Проверяет, что пользователь из сессии существует в БД.
+ *
+ * Зачем: аккаунт могли удалить (например, администратор), а cookie сессии
+ * осталась в браузере. Тогда любой INSERT с $_SESSION['user_id'] падал бы
+ * по внешнему ключу. Здесь такая сессия превращается в гостевую.
+ *
+ * CSRF-токен при этом сохраняется, чтобы уже открытая форма входа
+ * не получила ошибку 419 после очистки.
+ */
+function validate_session(PDO $pdo): void
+{
+    if (empty($_SESSION['user_id'])) {
+        return;
+    }
+
+    $stmt = $pdo->prepare('SELECT id, username, role, subscription_until FROM users WHERE id = ?');
+    $stmt->execute([(int)$_SESSION['user_id']]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        // Аккаунта больше нет — выходим из режима авторизации.
+        unset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['role'], $_SESSION['subscription_until']);
+        session_regenerate_id(true);
+        flash('Сессия устарела: войдите заново.', 'error');
+        return;
+    }
+
+    // Синхронизируем данные с БД: роль или срок подписки могли измениться.
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['role'] = $user['role'];
+    $_SESSION['subscription_until'] = $user['subscription_until'];
+}
+
 /** Текущий пользователь из БД (или null). */
 function current_user(PDO $pdo): ?array
 {

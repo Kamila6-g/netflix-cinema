@@ -29,3 +29,6 @@ require_once __DIR__ . '/db.php';
 
 // Общие функции: экранирование, роли, CSRF, карточки контента.
 require_once __DIR__ . '/functions.php';
+
+// Если аккаунт из cookie удалён — сессия становится гостевой до любых запросов к БД.
+validate_session($pdo);

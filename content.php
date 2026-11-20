@@ -113,10 +113,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_submit'])) {
 }
 
 // --- История просмотров: одна запись на пару пользователь+тайтл ------------
+// Запись в историю не должна ломать показ страницы: если аккаунт удалили
+// между проверкой сессии и этим запросом, просто пропускаем шаг и пишем лог.
 if (is_logged_in()) {
-    $h = $pdo->prepare("INSERT INTO history (user_id, content_id, watched_at) VALUES (?, ?, NOW())
-                        ON DUPLICATE KEY UPDATE watched_at = NOW()");
-    $h->execute([$_SESSION['user_id'], $id]);
+    try {
+        $h = $pdo->prepare("INSERT INTO history (user_id, content_id, watched_at) VALUES (?, ?, NOW())
+                            ON DUPLICATE KEY UPDATE watched_at = NOW()");
+        $h->execute([$_SESSION['user_id'], $id]);
+    } catch (PDOException $e) {
+        error_log('[history] ' . $e->getMessage());
+    }
 }
 
 $pageTitle = $item['title'] . ' · NETFLIX';
